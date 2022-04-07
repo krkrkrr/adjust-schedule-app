@@ -1,0 +1,254 @@
+<script>
+  // add form contents
+  window.addEventListener("load", function() {
+    // create default questions on load.
+    RenderQuestionOnload();
+    RenderInputdate();
+  });
+  window.addEventListener("click", function(event) {
+    event.stopImmediatePropagation();
+//    event.stopPropagation();
+    if(event.target.classList.contains("dispatchonclick")) {
+      if(event.target.classList.contains("renderquestion")) {
+        RenderQuestion();
+      } else if(event.target.classList.contains("renderinputdate")) {
+        RenderInputdate();
+      } else if(event.target.classList.contains("remove")) {
+        (event.target.parentNode).remove();
+      }
+    }
+  });
+  
+  // cancel default submit event and send form.
+  window.addEventListener("submit", function(event) {
+    onSubmit();
+  }, {passive: true});
+  
+  function RenderQuestion(argval) {
+    var parentnode = document.forms.essence;
+    var classname = "questionconvenience";
+    var qstncnvnnclist = parentnode
+      .getElementsByClassName(classname);
+    var div = document.createElement("div");
+    div.classList.add("form-group", classname);
+    var textbox = document.createElement("input");
+    textbox.name = "textboxconvenience";
+    textbox.classList.add(
+      "textboxconvenience",
+      "form-control"
+    );
+    textbox.required = true;
+    if(argval) {
+      textbox.value = argval;
+    } else {
+      textbox.placeholder = "入力してください。";
+    }
+    div.append(textbox);
+    var addbutton = document.createElement("input");
+    addbutton.type = "button";
+    addbutton.classList.add(
+      "dispatchonclick",
+      "renderquestion",
+      "btn",
+      "btn-light"
+    );
+    addbutton.value = "追加";
+    div.append(addbutton);
+    var delbutton = document.createElement("input");
+    delbutton.type = "button";
+    delbutton.classList.add(
+      "dispatchonclick",
+      "remove",
+      "btn",
+      "btn-light"
+    );
+    delbutton.value = "削除";
+    div.append(delbutton);
+    parentnode.insertBefore(
+      div,
+      parentnode.getElementsByClassName("form-group")[qstncnvnnclist.length + 2]
+    );
+  }
+  function RenderInputdate() {
+    var parentnode = document.forms.essence;
+    var classname = "inputdatecontainer";
+    var inptdtcntinrlist = parentnode
+      .getElementsByClassName(classname);
+    var div = document.createElement("div");
+    div.classList.add("form-group", classname);
+    var labela = document.createElement("label");
+    labela.for = "daya" + inptdtcntinrlist.length;
+    labela.textContent = "ここから";
+    div.append(labela);
+    var datea = document.createElement("input");
+    datea.type = "date";
+    datea.classList.add(
+      "inputdate", "form-control"
+    );
+    datea.required = true;
+    datea.name = "daya";
+    datea.id = "daya" + inptdtcntinrlist.length;
+    div.append(datea);
+    var labelb = document.createElement("label");
+    labelb.for = "dayz" + inptdtcntinrlist.length;
+    labelb.textContent = "ここまで";
+    div.append(labelb);
+    var dateb = document.createElement("input");
+    dateb.type = "date";
+    dateb.classList.add(
+      "inputdate", "form-control"
+    );
+    dateb.required = true;
+    dateb.name = "dayz";
+    dateb.id = "dayz" + inptdtcntinrlist.length;
+    div.append(dateb);
+    var addbutton = document.createElement("input");
+    addbutton.type = "button";
+    addbutton.classList.add(
+      "dispatchonclick",
+      "renderinputdate",
+      "btn",
+      "btn-light"
+    );
+    addbutton.value = "追加";
+    div.append(addbutton);
+    var delbutton = document.createElement("input");
+    delbutton.type = "button";
+    delbutton.classList.add(
+      "dispatchonclick",
+      "remove",
+      "btn",
+      "btn-light"
+    );
+    delbutton.value = "削除";
+    div.append(delbutton);
+    var formgrouplist = parentnode.getElementsByClassName("form-group");
+    parentnode.insertBefore(
+      div,
+      parentnode.getElementsByClassName("form-group")[formgrouplist.length - 1]
+    );
+  }
+  
+  // hueruwakame
+  function RenderQuestionWakame() {
+    var parentnode = document.forms.essence;
+    var classname = "questionconvenience";
+    var qstncnvnnclist = parentnode
+      .getElementsByClassName(classname);
+    var div = document.createElement("div");
+    div.classList.add("form-group", classname);
+    var textbox = document.createElement("input");
+    textbox.name = "textboxconvenience";
+    textbox.classList.add(
+      "textboxconvenience",
+      "form-control"
+    );
+    textbox.placeholder = "わかめ";
+    for(var index = 0; index < qstncnvnnclist.length; index++) {
+      textbox.placeholder += "わかめ";
+    }
+    div.append(textbox);
+    var addbutton = document.createElement("input");
+    addbutton.type = "button";
+    addbutton.classList.add(
+      "dispatchonclick",
+      "renderquestion",
+      "btn",
+      "btn-light"
+    );
+    addbutton.value = "ふえるわかめ";
+    div.append(addbutton);
+    var delbutton = document.createElement("input");
+    delbutton.type = "button";
+    delbutton.classList.add(
+      "dispatchonclick",
+      "removequestion",
+      "btn",
+      "btn-light"
+    );
+    delbutton.value = "きえるわかめ";
+    div.append(delbutton);
+    parentnode.insertBefore(
+      div,
+      parentnode.getElementsByClassName("form-group")[qstncnvnnclist.length + 1]
+    );
+ }
+ 
+ function RenderQuestionOnload() {
+   ([
+     "おっけー",
+     "そこそこ",
+     "むり",
+     "わからん"
+   ]).forEach(function(str) {
+     RenderQuestion(str);
+   });
+ }
+
+  // cancel default submit event and send form.
+  function onSubmit() {
+    document.forms.essence.elements.submitbtn.disabled = "disabled";
+    var domdaya = document.forms.essence.elements.daya;
+    var domdayz = document.forms.essence.elements.daya;
+    var domqstns = document.forms.essence.elements.textboxconvenience;
+    // validate input form.
+    if(domdaya.length < 1) {
+      RenderInputdate();
+      document.forms.essence
+        .getElementsByClassName("inputdatecontainer")[0]
+        .classList.add("missinput");
+      document.forms.essence.elements.submitbtn.disabled = false;
+      return;
+    } else if(domqstns.length < 2) {
+      RenderQuestion();
+      var dom = document.forms.essence
+        .getElementsByClassName("questionconvenience");
+      dom[dom.length -1].classList.add("missinput");
+      document.forms.essence.elements.submitbtn.disabled = false;
+      return;
+    }
+    
+    var obj = {};
+    obj.daya = [];
+    obj.dayz = [];
+    obj.questions = [];
+    // if value is empty, DOM has not only one value.
+    if(document.forms.essence.elements.daya.value) {
+      obj.daya.push(document.forms.essence.elements.daya.value);
+      obj.dayz.push(document.forms.essence.elements.dayz.value);
+    } else {
+      for(var prop = 0; prop < document.forms.essence.elements.daya.length; prop++) {
+        obj.daya.push(document.forms.essence.elements.daya[prop].value);
+        obj.dayz.push(document.forms.essence.elements.dayz[prop].value);
+      }
+    }
+    
+    for(var prop = 0; prop < document.forms.essence.elements.textboxconvenience.length; prop++) {
+      obj.questions.push(
+        document.forms.essence.elements.textboxconvenience[prop].value
+      );
+    }
+    console.log(obj);
+    // validation form
+    for(var prop in obj.daya) {
+      if((new Date(obj.dayz[prop])) < (new Date(obj.daya[prop]))) {
+        document.forms.essence
+          .getElementsByClassName("inputdatecontainer")[prop]
+          .classList.add("missinput");
+        document.forms.essence.elements.submitbtn.disabled = false;
+        return;
+      }
+    }
+    
+    google.script.run
+      .withSuccessHandler(function() {
+        // if delete this send message line, unstable.
+        google.script.host.close();
+      })
+      .withFailureHandler(function() {
+        document.forms.essence.elements.submitbtn.disabled = "";
+      })
+      .doForm(obj);
+  }
+  
+</script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" 
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+      crossorigin="anonymous">
+    <?!= include("jsanswer"); ?>
+  </head>
+  <body>
+    <div class="table-responsive" id="responses">
+      <table class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th></th>
+            <? questions.columns.forEach(function(col) { ?>
+              <th><?= col ?></th>
+            <? }); ?>
+          </tr>
+        </thead>
+        <tbody>
+          <? responses.forEach(function(row) { ?>
+            <tr>
+              <th><?= row.date ?></th>
+              <? row.values.forEach(function(obj) { ?>
+                <td title="<? obj.users.forEach(function(usr){ ?><?= usr.name ?> <? }); ?>"><?= obj.users.length ?></td>
+              <? }); ?>
+            </tr>
+          <? }); ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive" id="answers">
+      <div class="list-group">
+        <a href="javascript:void(0)" class="list-group-item list-group-item-action active">
+          回答者 (回答を修正したいときは、名前をクリックしてください。)
+        </a>
+        <? answers.forEach(function(obj) { ?>
+          <a href="<?= obj.link ?>" target="_blank" class="list-group-item list-group-item-action">
+            <?= obj.name ?>
+          </a>
+        <? }); ?>
+      </div>
+    </div>
+    <div class="table-responsive" id="comments">
+      <div class="list-group">
+        <div class="p-2 flex-fill bd-highlight text-light bg-primary">
+          コメント
+        </div>
+      </div>
+      <? comments.forEach(function(obj) { ?>
+        <div class="list-group">
+          <div class="p-2 bd-highlight text-light bg-secondary">
+            <?= obj.user.name ?>
+          </div>
+          <div class="p-2 flex-fill bd-highlight bg-light">
+            <?= obj.value ?>
+          </div>
+        </div>
+      <? }); ?>
+    </div>
+    
+  </body>
+</html>

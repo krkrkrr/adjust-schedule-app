@@ -1,0 +1,13 @@
+<script>
+  // add event listener
+  window.addEventListener("load", function() {init();});
+  
+  function init() {
+    var elems = document.getElementById("answers").getElementsByTagName("div");
+    if(!elems || elems.length < 1) {
+      // console.log("answer null.");
+      elems[0].getElementsByTagName("a")[0].textContent = "回答はありません。";
+    }
+  }
+
+</script>
